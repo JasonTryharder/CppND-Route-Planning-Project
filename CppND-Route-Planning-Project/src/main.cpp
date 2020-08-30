@@ -62,7 +62,7 @@ int main(int argc, const char **argv)
     float start_x ,start_y ,end_x ,end_y ;
     std::vector<float> v_float ;
     std::string input_str;
-    std::cout<< "Please input start/finish point as start_x,start_y,end_x,end_y ";
+    std::cout<< "Please input start/finish point as start_x,start_y,end_x,end_y\n ";
     getline(std::cin,input_str);
     std::stringstream ss(input_str);
     float i;
@@ -76,7 +76,7 @@ int main(int argc, const char **argv)
     start_y = v_float.at(1);
     end_x   = v_float.at(2);
     end_y   = v_float.at(3);
-    std::cout<< start_x << " X "<< start_y << " Y "<< end_x << " X "<< end_y << " Y\n ";
+    std::cout<< " "<<start_x << ","<< start_y << ","<< end_x << ","<< end_y << " \n ";
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
