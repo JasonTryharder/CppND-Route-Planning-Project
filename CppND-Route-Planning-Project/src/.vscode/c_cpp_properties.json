@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/../../P0267_RefImpl/P0267_RefImpl/P0267_RefImpl/**",
+                "${workspaceFolder}/../../P0267_RefImpl/P0267_RefImpl/P0267_RefImpl/cairo/**",
+                "${workspaceFolder}/../../P0267_RefImpl/P0267_RefImpl/P0267_RefImpl/cairo/xlib/**"
+            ],
+            "defines": [
+                "VERSION=1"
+            ],
+            "compilerPath": "/usr/bin/gcc-7",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-x64",
+            "compileCommands": "/home/jason-nhk/Udacity/CPP/P0267_RefImpl/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}
