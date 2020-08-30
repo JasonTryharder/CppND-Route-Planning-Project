@@ -1,3 +1,6 @@
 [submodule "MAP"]
 	path = MAP
 	url = https://github.com/JasonTryharder/MAP.git
+[submodule "CPP"]
+	path = CPP
+	url = https://github.com/JasonTryharder/CPP.git
