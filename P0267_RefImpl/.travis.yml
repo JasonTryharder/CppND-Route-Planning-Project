@@ -1,0 +1,71 @@
+language: cpp
+
+matrix:
+  include:
+
+# CoreGraphics/Cocoa on MacOSX
+    - os: osx
+      compiler: clang
+      osx_image: xcode9.1
+      brew_packages: libpng
+
+      before_script:
+        - mkdir build
+        - cd build
+        - curl -# -o clang6_0_0.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
+        - tar -xJf clang6_0_0.tar.xz
+        - mv clang+llvm-6.0.0-x86_64-apple-darwin clang
+
+      script:
+        - export CXXFLAGS="-nostdinc++ -isystem$TRAVIS_BUILD_DIR/build/clang/include/c++/v1"
+        - export LDFLAGS="-L$TRAVIS_BUILD_DIR/build/clang/lib -Wl,-rpath,$TRAVIS_BUILD_DIR/build/clang/lib"
+        - export CTEST_OUTPUT_ON_FAILURE="1"
+        - cmake -G "Unix Makefiles" --config Debug -DCMAKE_BUILD_TYPE=Debug -DIO2D_DEFAULT=COREGRAPHICS_MAC ../.
+        - make
+        - ctest -V -C Debug
+
+# Cairo/Xlib on MacOSX
+    - os: osx
+      compiler: clang
+      osx_image: xcode9.1
+      before_script:
+        - mkdir build
+        - cd build
+        - curl -# -o clang6_0_0.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
+        - tar -xJf clang6_0_0.tar.xz
+        - mv clang+llvm-6.0.0-x86_64-apple-darwin clang
+        - export COLUMNS=80
+        - curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
+        - chmod +x ./macports-ci
+        - ./macports-ci install
+        - PATH="/opt/local/bin:$PATH"
+        - sudo port -N -k install cairo +x11
+        - brew install graphicsmagick
+
+      script:
+        - export CXXFLAGS="-nostdinc++ -isystem$TRAVIS_BUILD_DIR/build/clang/include/c++/v1 -isystem/opt/X11/include -isystem/opt/local/include -isystem/usr/local/include"
+        - export LDFLAGS="-L$TRAVIS_BUILD_DIR/build/clang/lib -Wl,-rpath,$TRAVIS_BUILD_DIR/build/clang/lib -L/opt/X11/lib -L/opt/local/lib -L/usr/local/lib"
+        - export CTEST_OUTPUT_ON_FAILURE="1"
+        - cmake -G "Unix Makefiles" --config Debug -DCMAKE_BUILD_TYPE=Debug -DIO2D_DEFAULT=CAIRO_XLIB ../.
+        - make
+        - ctest -V -C Debug
+
+# Cairo/Xlib on Linux
+    - os: linux
+      sudo: required
+      dist: trusty
+
+      addons:
+        apt:
+            sources: ubuntu-toolchain-r-test
+            packages: ['g++-7', 'build-essential',  'libcairo2-dev', 'libgraphicsmagick1-dev', 'libpng-dev']
+      before_script:
+        - mkdir build
+        - cd build
+
+      script:
+        - export CXX=g++-7
+        - export CTEST_OUTPUT_ON_FAILURE="1"
+        - cmake -G "Unix Makefiles" --config Debug -DCMAKE_BUILD_TYPE=Debug -DIO2D_DEFAULT=CAIRO_XLIB ../.
+        - make
+        - ctest -V -C Debug

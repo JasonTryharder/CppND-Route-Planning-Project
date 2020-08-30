@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/P0267_RefImpl/Debug
+*.user
+/x64/Release
+/P0267_RefImpl/x64/Release
+Makefile
+Makefile.in
